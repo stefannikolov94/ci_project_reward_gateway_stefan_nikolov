@@ -40,9 +40,9 @@ class Site extends CI_Controller
     {
         $this->load->library("form_validation");
         //set_rules is function from library, xss_clean
-        $this->form_validation->set_rules("fullName", "Full Name", "required|alpha|xss_clean");
-        $this->form_validation->set_rules("email", "Email Address", "required|valid mail|xss_clean");
-        $this->form_validation->set_rules("message", "Message", "required|xss_clean");
+        $this->form_validation->set_rules("fullName", "Full Name", "required|alpha");
+        $this->form_validation->set_rules("email", "Email Address", "required|valid mail");
+        $this->form_validation->set_rules("message", "Message", "required");
 
         if($this->form_validation->run() == FALSE)
         {
@@ -50,7 +50,7 @@ class Site extends CI_Controller
 
             $this->load->view("site_header");
             $this->load->view("site_nav");
-            $this->load->view("content_home", $data);
+            $this->load->view("content_contact", $data);
             $this->load->view("site_footer");
         }
         else
