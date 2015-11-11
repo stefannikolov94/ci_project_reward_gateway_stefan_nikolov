@@ -22,7 +22,7 @@ class Site extends CI_Controller
     {
         $this->load->view("site_header");
         $this->load->view("site_nav");
-        $this->load->view("content_contact");
+        $this->load->view("content_about");
         $this->load->view("site_footer");
     }
 
@@ -41,7 +41,7 @@ class Site extends CI_Controller
         $this->load->library("form_validation");
         //set_rules is function from library, xss_clean
         $this->form_validation->set_rules("fullName", "Full Name", "required|alpha");
-        $this->form_validation->set_rules("email", "Email Address", "required|valid mail");
+        $this->form_validation->set_rules("email", "Email Address", "required|valid_email");
         $this->form_validation->set_rules("message", "Message", "required");
 
         if($this->form_validation->run() == FALSE)
