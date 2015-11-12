@@ -5,6 +5,7 @@
             echo validation_errors();
     // send_email function
         //echo form_open("site/send_email");
+    //site is controller and send_email is a controller function name
         echo form_open("site/send_email");
 
         echo form_label("Name: ", "fullName");

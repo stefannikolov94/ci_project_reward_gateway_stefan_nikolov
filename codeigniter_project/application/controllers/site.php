@@ -3,6 +3,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Site extends CI_Controller
 {
+    // constructor for database model
+    function __construct()
+    {
+        parent:: __construct();
+        $this->load->model('insert_model');
+    }
+
     public function index()
     {
         // load the view
@@ -38,8 +45,11 @@ class Site extends CI_Controller
 
     public function send_email()
     {
+        // Form validation
         $this->load->library("form_validation");
-        //set_rules is function from library, xss_clean
+        //set_rules is function from CI library where first parameter is the field name,
+        // second is name for this field, which will be inserted into the error message
+        // and the third is the validation rules for this form field
         $this->form_validation->set_rules("fullName", "Full Name", "required|alpha");
         $this->form_validation->set_rules("email", "Email Address", "required|valid_email");
         $this->form_validation->set_rules("message", "Message", "required");
@@ -56,25 +66,51 @@ class Site extends CI_Controller
         else
         {
             $data['message'] = "The email is successful send!";
+            /*Storing submitted values
+            $fullName = $this->input->post('fullName');
+            $email = $this->input->post('email');
+            $message = $this->input->post('message');*/
 
-            //use email library from CI
+            // Configure email library
+            $config['protocol'] = 'smtp';
+            $config['smtp_host'] = 'ssl://smtp.googlemail.com';
+            $config['smtp_port'] = 465;
+            $config['smtp_user'] = 'stefan.borislavov.nikolov@gmail.com';
+            $config['smtp_pass'] = 'stefannikolov1234';
+            $config['mailtype'] = 'html';
+            $config['charset'] = 'iso-8859-1';
+            $config['wordwrap'] = TRUE;
+            $config['newline'] = "\r\n"; //use double quotes to comply with RFC 822 standard
+
+            //load the codeigniter email library and use its methods to send mail.
             $this->load->library("email");
             $this->email->from(set_value("email"), set_value("fullName"));
             $this->email->to("stefan.borislavov.nikolov@gmail.com");
             $this->email->subject("Message from out from");
             $this->email->message(set_value("message"));
-
             $this->email->send();
-
             // show message..print_debugger from the CI library
             echo $this->email->print_debugger();
+            // Insert into database model
+            $insert['query'] = $this->insert_model->insert();
+            if ($insert['query'] != NULL)
+            {
+                $data = "The email is not successful send!";
+                $this->load->view("site_header");
+                $this->load->view("site_nav");
+                $this->load->view("content_contact", $data);
+                $this->load->view("site_footer");
+            }
+            else
+            {
+                $data['message'] = "The email is successful send!";
+                $this->load->view("site_header");
+                $this->load->view("site_nav");
+                $this->load->view("content_contact", $data);
+                $this->load->view("site_footer");
+            }
 
-            $this->load->view("site_header");
-            $this->load->view("site_nav");
-            $this->load->view("content_home", $data);
-            $this->load->view("site_footer");
         }
-
     }
 }
 ?>
