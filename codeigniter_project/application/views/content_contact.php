@@ -32,7 +32,8 @@
             "value"=>set_value("message")
         );
         echo form_textarea($data);
-
+        echo form_error('g-recaptcha-response','<div style="color:red;">','</div>');
+        echo '<div class="g-recaptcha" data-sitekey="6LfC1xATAAAAAEOqCQaERx_IIrbQMXIq4BBIDtVf"></div>';
         echo form_submit("contactSubmit", "Send!");
 
         echo form_close();

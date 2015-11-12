@@ -63,6 +63,7 @@ class Site extends CI_Controller
             $this->load->view("content_contact", $data);
             $this->load->view("site_footer");
         }
+
         else
         {
             $data['message'] = "The email is successful send!";
@@ -110,6 +111,34 @@ class Site extends CI_Controller
                 $this->load->view("site_footer");
             }
 
+        }
+    }
+//Recaptcha with google
+    public function recaptcha($str='')
+    {
+        $this->load->library("form_validation");
+        $google_url="https://www.google.com/recaptcha/api/siteverify";
+        // google key
+        $secret='6LfC1xATAAAAAPa0xAvetGgpCkButnS7OAmywtwU';
+        $ip=$_SERVER['REMOTE_ADDR'];
+        $url=$google_url."?secret=".$secret."&response=".$str."&remoteip=".$ip;
+        $curl = curl_init();
+        curl_setopt($curl, CURLOPT_URL, $url);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($curl, CURLOPT_TIMEOUT, 10);
+        curl_setopt($curl, CURLOPT_USERAGENT, "Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.2.16) Gecko/20110319 Firefox/3.6.16");
+        $res = curl_exec($curl);
+        curl_close($curl);
+        $res= json_decode($res, true);
+        //reCaptcha success check
+        if($res['success'])
+        {
+            return TRUE;
+        }
+        else
+        {
+            $this->form_validation->set_message('recaptcha', 'The reCAPTCHA field is telling me that you are a robot. Shall we give it another try?');
+            return FALSE;
         }
     }
 }
