@@ -53,6 +53,7 @@ class Site extends CI_Controller
         $this->form_validation->set_rules("fullName", "Full Name", "required|alpha");
         $this->form_validation->set_rules("email", "Email Address", "required|valid_email");
         $this->form_validation->set_rules("message", "Message", "required");
+        $this->form_validation->set_rules('g-recaptcha-response','Captcha','callback_recaptcha');
 
         if($this->form_validation->run() == FALSE)
         {
@@ -122,17 +123,14 @@ class Site extends CI_Controller
         $secret='6LfC1xATAAAAAPa0xAvetGgpCkButnS7OAmywtwU';
         $ip=$_SERVER['REMOTE_ADDR'];
         $url=$google_url."?secret=".$secret."&response=".$str."&remoteip=".$ip;
-        $curl = curl_init();
-        curl_setopt($curl, CURLOPT_URL, $url);
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($curl, CURLOPT_TIMEOUT, 10);
-        curl_setopt($curl, CURLOPT_USERAGENT, "Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.2.16) Gecko/20110319 Firefox/3.6.16");
-        $res = curl_exec($curl);
-        curl_close($curl);
-        $res= json_decode($res, true);
+        $response=json_decode(file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret=6LfC1xATAAAAAPa0xAvetGgpCkButnS7OAmywtwU&response=".$_POST['g-recaptcha-response']."&remoteip=".$_SERVER['REMOTE_ADDR']), true);
+
+
         //reCaptcha success check
-        if($res['success'])
+        if($response['success'])
         {
+            //die('succes');
+            //echo 'Successfull recatpcha';
             return TRUE;
         }
         else
