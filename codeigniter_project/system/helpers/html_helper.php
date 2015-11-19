@@ -408,3 +408,20 @@ if ( ! function_exists('nbs'))
 		return str_repeat('&nbsp;', $num);
 	}
 }
+
+if (! function_exists('menu'))
+{
+    function menu($menu = '')
+    {
+        $id = $menu['id'];
+        $item = $menu['menus'];
+
+        $nav_menu = '<div id='."$id".'>';
+            foreach ($item as $li_menu)
+            {
+                $li_a_nav[] = '<a href='.base_url().$li_menu.'>'.strtoupper(str_replace('_', ' ',$li_menu)).'</a>';
+            }
+        $nav_menu .= ul($li_a_nav).'</div>';
+        return $nav_menu;
+    }
+}
