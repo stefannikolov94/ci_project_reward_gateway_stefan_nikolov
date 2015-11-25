@@ -409,6 +409,7 @@ if ( ! function_exists('nbs'))
 	}
 }
 
+/* function for nav menu */
 if (! function_exists('menu'))
 {
     function menu($menu = '')

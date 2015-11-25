@@ -1,25 +1,43 @@
 <body>
 <center><h1>My first blog in CI</h1></center>
 <div id="wrapper">
-    <!-- navigation -->
-        <!--
+    <!-- navigation
         <ul>
-            <li><a href="<?php //echo base_url(); ?>site/home">Home</a></li> |
-            <li><a href="<?php // echo base_url(); ?>site/about">About</a></li> |
-            <li><a href="<?php //echo base_url(); ?>site/create_post">Create post</a></li> |
-            <li><a href="<?php //echo base_url(); ?>site/contact">Contact</a></li>
+            <li><a href="<?php// echo base_url(); ?>home/home">Home</a></li> |
+            <li><a href="<?php// echo base_url(); ?>home/about">About</a></li> |
+            <li><a href="<?php// echo base_url(); ?>home/create_post">Create post</a></li> |
+            <li><a href="<?php// echo base_url(); ?>home/contact">Contact</a></li>
         </ul>-->
         <?php
-        $data = array(
-            'id' =>'nav',
-            'menus' => array(
-              'menu1' => 'home',
-              'menu2' => 'about',
-              'menu3' => 'create post',
-              'menu4' => 'contact',
-            ),
-        );
-
+        // check if the user is logged and show certain menus
+        if(($this->session->userdata('user_id') == ""))
+        {
+            $data = array(
+                'id' => 'nav',
+                'menus' => array(
+                    'menu1' => 'home',
+                    'menu2' => 'about',
+                    'menu3' => 'login',
+                    'menu4' => 'register',
+                    //'menu5' => 'create post',
+                    'menu5' => 'contact',
+                ),
+            );
+        }
+        else {
+            $data = array(
+                'id' => 'nav',
+                'menus' => array(
+                    'menu1' => 'home',
+                    'menu2' => 'about',
+                    //'menu3' => 'login',
+                    //'menu4' => 'register',
+                    'menu3' => 'create post',
+                    'menu4' => 'contact',
+                    'menu5' => 'logout',
+                ),
+            );
+        }
         echo menu($data);
         ?>
     </div>

@@ -1,11 +1,4 @@
 <?php
-
-/**
- * Created by PhpStorm.
- * User: USER
- * Date: 19.11.2015 г.
- * Time: 10:26
- */
 class Post extends CI_Controller
 {
     public function view($id)
@@ -15,6 +8,22 @@ class Post extends CI_Controller
         $this->load->view("site_nav");
         $this->load->view("post_view", $data);
         $this->load->view("site_footer");
+    }
+
+    public function delete($id)
+    {
+        //$id = $this->uri->segment(3);
+        $data['post'] = $this->blog_model->delete_post($id);
+        $data = "Delete sucessfull";
+        $this->load->view("site_header", $data);
+        $this->load->view("site_nav");
+        //$this->load->view("content_view", $data);
+        $this->load->view("site_footer");
+    }
+
+    public function update()
+    {
+        echo 'hey';
     }
 
 }
