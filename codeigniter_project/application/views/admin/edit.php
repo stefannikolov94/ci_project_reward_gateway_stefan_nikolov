@@ -9,8 +9,8 @@
     <table cellpadding="2" cellspacing="2">
     <tr>
         <td>Id:</td>
-        <td><?php echo $user->id;?></td>
-        <input type="hidden" name="id" value="<?php echo $user->id; ?>"/>
+        <td><?php echo $user->user_id;?></td>
+        <input type="hidden" name="id" value="<?php echo $user->user_id; ?>"/>
     <tr>
         <td>Username:</td>
         <td><input type="text" name="username" value="<?php echo $user->username; ?>"/></td>

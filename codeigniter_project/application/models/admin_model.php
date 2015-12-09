@@ -29,19 +29,19 @@ class Admin_model extends CI_Model
         $this->db->set('username', $username);
         $this->db->set('email', $email);
         $this->db->set('gender', $gender);
-        $this->db->where('id', $id);
+        $this->db->where('user_id', $id);
         return $this->db->update('users');
     }
 
     public function delete($id)
     {
-        $this->db->where('id', $id);
+        $this->db->where('user_id', $id);
         $this->db->delete('users');
     }
 
     public function find($id)
     {
-        $this->db->where('id', $id);
+        $this->db->where('user_id', $id);
         return $this->db->get('users')->row();
     }
 
@@ -54,7 +54,7 @@ class Admin_model extends CI_Model
         {
             $row=$query->row();
             $userdata = array(
-                'user_id'  => $row->id,
+                'user_id'  => $row->user_id,
                 'username'  => $row->username,
                 'email'    => $row->email,
             );

@@ -26,7 +26,7 @@
     $this->table->set_heading('ID', 'Username', 'Email', 'Gender', 'Registered', 'Operations');
     foreach ($users as $user)
     {
-        $this->table->add_row($user->id, $user->username, $user->email, $user->gender, date('Y-m-d', $user->registered), anchor('admin/users/delete/'.$user->id, 'Delete', array('onclick'=>'return confirm("Are you sure?")')).' | '.anchor('admin/users/edit/'.$user->id, 'Edit'));
+        $this->table->add_row($user->user_id, $user->username, $user->email, $user->gender, date('Y-m-d', $user->registered), anchor('admin/users/delete/'.$user->user_id, 'Delete', array('onclick'=>'return confirm("Are you sure?")')).' | '.anchor('admin/users/edit/'.$user->user_id, 'Edit'));
     }
     echo $this->table->generate();
     ?>
