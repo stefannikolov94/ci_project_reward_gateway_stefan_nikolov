@@ -15,9 +15,9 @@
         <p><b>Author</b></p>
         <?php echo $post['author'];
             ?></p>
-        <b><a href="<?php echo site_url('post/view/'.$post['id'])?>">read more</a></b>
-        <b><a href="<?php echo site_url('post/delete/'.$post['id'])?>">delete</a></b>
-        <b><a href="<?php echo site_url('post/update/'.$post['id'])?>"</b>update</a></b>
+        <b><a href="<?php echo site_url('post/view/'.$post['post_id'])?>">read more</a></b>
+        <b><a href="<?php echo site_url('post/delete/'.$post['post_id'])?>">delete</a></b>
+        <b><a href="<?php echo site_url('post/update/'.$post['post_id'])?>"</b>update</a></b>
         <?php } ?>
 
     </div>

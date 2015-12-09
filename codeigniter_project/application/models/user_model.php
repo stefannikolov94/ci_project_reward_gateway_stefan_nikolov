@@ -4,18 +4,19 @@ class User_model extends CI_Model {
     {
         parent::__construct();
     }
-    public function register_user()
+    public function register_user($data)
     {
-        $data=array(
-            'username'=>$this->input->post('username'),
-            'email'=>$this->input->post('email'),
-            'password'=>md5($this->input->post('password')),
-            'gender'=>$this->input->post('gender'),
-            'registered'=>time()
-        );
         $this->db->insert('users',$data);
         return true;
     }
+/* not working verifymail user
+    public function verifyEmailUser($key)
+    {
+        $data = array('active_status' => 1, $key);
+        $this->db->where('md5(email)', $key);
+        return $this->db->update('users', $data);
+    }
+*/
     function login($email,$password)
     {
         $this->db->where("email",$email);
@@ -25,7 +26,7 @@ class User_model extends CI_Model {
         {
             $row=$query->row();
             $userdata = array(
-                'user_id'  => $row->id,
+                'user_id'  => $row->user_id,
                 'username'  => $row->username,
                 'email'    => $row->email,
             );

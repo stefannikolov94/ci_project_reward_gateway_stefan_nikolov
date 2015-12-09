@@ -26,6 +26,7 @@
                 <td>Post body</td>
                 <td>:</td>
                 <td><?php echo form_textarea('body'); ?></textarea></td>
+                <script>CKEDITOR.replace('body');</script>
             </tr>
             </table>
 

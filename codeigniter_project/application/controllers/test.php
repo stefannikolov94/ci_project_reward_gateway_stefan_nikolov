@@ -18,9 +18,9 @@ class Test extends CI_Controller
         if ($this->input->post('upload')) {
             $config['upload_path'] = './images/';
             $config['allowed_types'] = 'gif|jpg|png';
-            $config['max_size'] = '1024';
-            $config['max_width'] = '1024';
-            $config['max_height'] = '768';
+            $config['max_size']	= '100';
+            $config['max_width']  = '1024';
+            $config['max_height']  = '768';
             $config['overwrite'] = false;
 
             $this->load->library('upload', $config);

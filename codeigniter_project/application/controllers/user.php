@@ -57,6 +57,7 @@ class User extends CI_Controller {
         $this->form_validation->set_rules($rules);
         if($this->form_validation->run() == FALSE)
         {
+
             $this->load->view("site_header");
             $this->load->view("site_nav");
             $this->load->view("content_register");
@@ -64,10 +65,50 @@ class User extends CI_Controller {
         }
         else
         {
-            $this->user_model->register_user();
-            $this->load->view('success');
+            //$key = md5(uniqid());
+            $data=array(
+                'username'=>$this->input->post('username'),
+                'email'=>$this->input->post('email'),
+                /*
+                'email_verification_code' =>$key,
+                'active_status'=>$this->input->post('active_status'),*/
+                'password'=>md5($this->input->post('password')),
+                'gender'=>$this->input->post('gender'),
+                'registered'=>time()
+            );
+            $this->user_model->register_user($data);
+            redirect(site_url('home'));
         }
     }
+/*
+    function sendVerificatinEmail($email, $key){
+        $config = Array(
+            'protocol' => 'smtp',
+            'smtp_host' => 'smtp.yourdomain.com.',
+            'smtp_port' => 465,
+            'smtp_user' => 'admin@yourdomain.com', // change it to yours
+            'smtp_pass' => '########', // change it to yours
+            'mailtype' => 'html',
+            'charset' => 'iso-8859-1',
+            'wordwrap' => TRUE
+        );
+
+
+        $this->load->library('email', $config);
+        $this->email->set_newline("\r\n");
+        $this->email->from('admin@yourdomain.com', "Admin Team");
+        $this->email->to($email);
+        $this->email->subject("Email Verification");
+        $this->email->message(site_url('user/verify/'.$key));
+        $this->email->send();
+
+    }
+
+    public function verify($key)
+    {
+        $this->user_model->verifyEmailUser($key);
+    }
+*/
     public function logout()
     {
         $this->session->sess_destroy();

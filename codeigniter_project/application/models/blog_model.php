@@ -39,11 +39,11 @@ class Blog_model extends CI_Model
 
     public function get_post($id)
     {
-        $query = $this->db->get_where('posts', array('id'));
+        $query = $this->db->get_where('posts', array('post_id'));
 
         if ($query->num_rows() > 0)
         {
-            $query = $this->db->get_where('posts', array('id'=>$id))->row_array();
+            $query = $this->db->get_where('posts', array('post_id'=>$id))->row_array();
             return $query;
         }
         else
@@ -60,14 +60,26 @@ class Blog_model extends CI_Model
                           WHERE id = id");
     }
 
+    public function update_post($title, $author, $body, $id)
+    {
+        $this->db->set('title', $title);
+        $this->db->set('author', $author);
+        $this->db->set('body', $body);
+        $this->db->where('post_id', $id);
+        var_dump($title, $author, $body); die;
+        return $this->db->update('posts');
+    }
+
     public function delete_post($id)
     {
-        $this->db->where('id', $id);
+        $this->db->where('post_id', $id);
         $this->db->delete('posts');
     }
 
-    public function update_post($id)
+    public function find($id)
     {
-
+        $this->db->where('post_id', $id);
+        return $this->db->get('posts')->row();
     }
+
 }
